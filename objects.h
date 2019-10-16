@@ -40,6 +40,8 @@ class Gorol {
     void die(){ isAlive = false; }
     int* get_pos(){ return pos; }
     char get_face(){ return face; }
+    bool get_status(){ return isAlive; }
+    void revive(){ isAlive = true; }
 
 
 };
