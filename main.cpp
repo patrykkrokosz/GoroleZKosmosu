@@ -1,12 +1,15 @@
+#include <iostream>
 #include <ncurses.h>
+#include "objects.h"
+
+using namespace std;
 
 int main()
 {
-	initscr();			/* Start curses mode 		  */
-	printw("Hello Worl");	/* Print Hello World		  */
-	refresh();			/* Print it on to the real screen */
-	getch();			/* Wait for user input */
-	endwin();			/* End curses mode		  */
+
+    Gorol gorol;
+
+    cout<< *gorol.get_pos();
 
 	return 0;
 }
