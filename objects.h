@@ -16,7 +16,7 @@ class Player {
     void move_right(){ x++; }
     void move_left(){ x--; }
     int get_lives(){ return lives; }
-    void lose_live() { lives--;}
+    void lose_live() { lives--; }
     int get_pos(){ return x; }
 };
 
@@ -27,9 +27,9 @@ class Gorol {
     char face;
 
   public:
-    Gorol(int ix = 0, int iy = 0, char iface = 'G', bool iisAlive = true){
-        pos[1] = ix;
+    Gorol(int iy = 0, int ix = 0, char iface = 'G', bool iisAlive = true){
         pos[0] = iy;
+        pos[1] = ix;
         face = iface;
         isAlive = iisAlive;
     }
@@ -38,7 +38,8 @@ class Gorol {
     void move_left(){ pos[1]--; }
     void move_down(){ pos[0]--; }
     void die(){ isAlive = false; }
-    int get_pos(){ return pos; }
+    int* get_pos(){ return pos; }
+    char get_face(){ return face; }
 
 
 };
