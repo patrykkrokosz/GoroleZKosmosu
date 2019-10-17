@@ -32,6 +32,7 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="main.cpp" />
+		<Unit filename="objects.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

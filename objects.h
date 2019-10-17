@@ -36,7 +36,7 @@ class Gorol {
 
     void move_right(){ pos[1]++; }
     void move_left(){ pos[1]--; }
-    void move_down(){ pos[0]--; }
+    void move_down(){ pos[0]++; }
     void die(){ isAlive = false; }
     int* get_pos(){ return pos; }
     char get_face(){ return face; }
