@@ -1,9 +1,9 @@
 # depslib dependency file v1.0
-1571296530 source:/home/kenny/Cepepe/GoroleZKosmosu/main.cpp
+1571409235 source:/home/kenny/Cepepe/GoroleZKosmosu/main.cpp
 	<iostream>
 	<ncurses.h>
 	<time.h>
 	"objects.h"
 
-1571296626 /home/kenny/Cepepe/GoroleZKosmosu/objects.h
+1571409109 /home/kenny/Cepepe/GoroleZKosmosu/objects.h
 

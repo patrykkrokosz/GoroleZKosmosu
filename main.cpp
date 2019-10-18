@@ -3,9 +3,9 @@
 #include <time.h>
 #include "objects.h"
 
-const int ENEMIESNUMBER = 40;
+const int ENEMIESNUMBER = 80;
 const int WIDTH = 60;
-const int HEIGHT = 40;
+const int HEIGHT = 20;
 
 enum Directions{
     LEFT,
@@ -22,10 +22,10 @@ void sleep(unsigned int mseconds)
 int find_nearest_to_the_edge(Gorol *gorole, bool toRight){
     int nearest = 0;
     for(int i = 1; i < ENEMIESNUMBER; i++){
-        if (gorole[nearest].get_pos()[1] <= gorole[i].get_pos()[1] && toRight){
+        if (gorole[nearest].get_pos()[1] <= gorole[i].get_pos()[1] && toRight && gorole[i].get_status()){
             nearest = i;
         }
-        else if (gorole[nearest].get_pos()[1] >= gorole[i].get_pos()[1] && !toRight){
+        else if (gorole[nearest].get_pos()[1] >= gorole[i].get_pos()[1] && !toRight && gorole[i].get_status()){
             nearest = i;
         }
     }
@@ -34,10 +34,12 @@ int find_nearest_to_the_edge(Gorol *gorole, bool toRight){
 
 int find_lowest(Gorol *gorole){
     int lowest = 0;
-    for int i = 1; i < ENEMIESNUMBER; i++){
-    if (gorole[lowest].get_pos()[0] => gorole[i].get_pos()[0]){
+    for (int i = 1; i < ENEMIESNUMBER; i++){
+        if (gorole[lowest].get_pos()[0] >= gorole[i].get_pos()[0] && gorole[i].get_status()){
+            lowest = i;
+        }
     }
-    }
+    return lowest;
 }
 
 void move_enemies(Gorol *gorole, Directions dir){
@@ -80,17 +82,34 @@ int main()
     clear();
     noecho();
     cbreak();
+    keypad(stdscr, true);
+    timeout(10);
+    curs_set(0);
     bool game = true;
     bool enemiesgotoright = true;
-    int nearest;
+    int nearest, lowest, pressedkey;
 
     while(game){
         for(int i = 0; i < ENEMIESNUMBER; i++){
             mvaddch(gorole[i].get_pos()[0], gorole[i].get_pos()[1], gorole[i].get_face());
         }
-    refresh();
+        refresh();
 
-    sleep(100000);
+        mvaddch(HEIGHT-1, player.get_pos(), player.get_face());
+
+        pressedkey = getch();
+        sleep(100000);
+
+        switch (pressedkey){
+            case KEY_LEFT:
+                player.move_left();
+                break;
+            case KEY_RIGHT:
+                player.move_right();
+                break;
+            default:
+                break;
+        }
 
         nearest = find_nearest_to_the_edge(gorole, enemiesgotoright);
 
@@ -106,9 +125,18 @@ int main()
                 move_enemies(gorole, LEFT);
             }
         }
-    clear();
-    refresh();
+
+        lowest = find_lowest(gorole);
+        if (gorole[lowest].get_pos()[0] >= HEIGHT-2 ){
+            game = false;
+        }
+        clear();
+        refresh();
     }
+
+    printw("Game ended, lol.");
+    refresh();
+    getch();
     endwin();
 
 	return 0;

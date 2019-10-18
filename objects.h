@@ -18,6 +18,7 @@ class Player {
     int get_lives(){ return lives; }
     void lose_live() { lives--; }
     int get_pos(){ return x; }
+    char get_face(){ return face; }
 };
 
 class Gorol {
