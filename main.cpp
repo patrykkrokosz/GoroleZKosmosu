@@ -3,7 +3,7 @@
 #include <time.h>
 #include "objects.h"
 
-const int ENEMIESNUMBER = 80;
+const int ENEMIESNUMBER = 40;
 const int WIDTH = 60;
 const int HEIGHT = 20;
 
@@ -83,7 +83,7 @@ int main()
     noecho();
     cbreak();
     keypad(stdscr, true);
-    timeout(10);
+    timeout(100);
     curs_set(0);
     bool game = true;
     bool enemiesgotoright = true;
