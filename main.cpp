@@ -109,6 +109,7 @@ int main()
                 break;
             default:
                 break;
+            pressedkey = 0;
         }
 
         nearest = find_nearest_to_the_edge(gorole, enemiesgotoright);
@@ -131,6 +132,7 @@ int main()
             game = false;
         }
         clear();
+        pressedkey = 0;
         refresh();
     }
 

@@ -46,3 +46,34 @@ class Gorol {
 
 
 };
+
+class Boolet {
+    int pos[2];
+    char face;
+    bool goup, active;
+
+  public:
+    Boolet(int iy = 0, int ix = 0, bool igoup = true, bool iactive = false){
+        pos[0] = iy;
+        pos[1] = ix;
+        goup = igoup;
+        active = iactive;
+    }
+
+    void move(){
+        if (goup)
+            pos[0]--;
+        else
+            pos[0]++;
+    }
+
+    int* get_pos() {return pos;}
+    char get_face(){return face;}
+    bool is_active(){return active;}
+    void shoot(int iy, int ix, bool igoup){
+        pos[0] = iy;
+        pos[1] = ix;
+        goup = igoup;
+        active = true;
+    }
+};
