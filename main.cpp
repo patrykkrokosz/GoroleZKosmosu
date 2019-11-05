@@ -89,7 +89,15 @@ int main()
     bool enemiesgotoright = true;
     int nearest, lowest, pressedkey;
 
+    //************************
+    //*****GAME LOOP HERE*****
+    //************************
+
     while(game){
+
+        mvprintw(0, 0,"Lives: %d", player.get_lives());
+        mvprintw(1, 0,"Score: %d", player.get_score());
+
         for(int i = 0; i < ENEMIESNUMBER; i++){
             mvaddch(gorole[i].get_pos()[0], gorole[i].get_pos()[1], gorole[i].get_face());
         }

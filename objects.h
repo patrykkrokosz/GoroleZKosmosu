@@ -16,6 +16,7 @@ class Player {
     void move_right(){ x++; }
     void move_left(){ x--; }
     int get_lives(){ return lives; }
+    int get_score(){ return score;}
     void lose_live() { lives--; }
     int get_pos(){ return x; }
     char get_face(){ return face; }
