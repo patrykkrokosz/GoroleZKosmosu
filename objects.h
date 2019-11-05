@@ -16,8 +16,9 @@ class Player {
     void move_right(){ x++; }
     void move_left(){ x--; }
     int get_lives(){ return lives; }
-    int get_score(){ return score;}
+    int get_score(){ return score; }
     void lose_live() { lives--; }
+    void add_score(int points) { score+=points; }
     int get_pos(){ return x; }
     char get_face(){ return face; }
 };
@@ -54,11 +55,12 @@ class Boolet {
     bool goup, active;
 
   public:
-    Boolet(int iy = 0, int ix = 0, bool igoup = true, bool iactive = false){
+    Boolet(int iy = 0, int ix = 0, char iface = 'i', bool igoup = true, bool iactive = false){
         pos[0] = iy;
         pos[1] = ix;
         goup = igoup;
         active = iactive;
+        face = iface;
     }
 
     void move(){
@@ -71,10 +73,12 @@ class Boolet {
     int* get_pos() {return pos;}
     char get_face(){return face;}
     bool is_active(){return active;}
+    void deactivate() { active = false; }
     void shoot(int iy, int ix, bool igoup){
         pos[0] = iy;
         pos[1] = ix;
         goup = igoup;
         active = true;
     }
+    void go(){ if(goup) {pos[0]--;} else {pos[0]++;}}
 };

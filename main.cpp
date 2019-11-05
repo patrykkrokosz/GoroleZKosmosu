@@ -33,9 +33,15 @@ int find_nearest_to_the_edge(Gorol *gorole, bool toRight){
 }
 
 int find_lowest(Gorol *gorole){
-    int lowest = 0;
-    for (int i = 1; i < ENEMIESNUMBER; i++){
-        if (gorole[lowest].get_pos()[0] >= gorole[i].get_pos()[0] && gorole[i].get_status()){
+    int lowest;
+    for (int i = 0; i < ENEMIESNUMBER; i++){
+        if (gorole[i].get_status()){
+        lowest = i;
+        break;
+        }
+    }
+    for (int i = 0; i < ENEMIESNUMBER; i++){
+        if (gorole[lowest].get_pos()[0] <= gorole[i].get_pos()[0] && gorole[i].get_status()){
             lowest = i;
         }
     }
@@ -65,6 +71,7 @@ int main()
 
     Gorol gorole[ENEMIESNUMBER];
     Player player;
+    Boolet playerBullet;
 
     int gy = 4;
     int gx = 4;
@@ -88,6 +95,7 @@ int main()
     bool game = true;
     bool enemiesgotoright = true;
     int nearest, lowest, pressedkey;
+    int aliveEnemies;
 
     //************************
     //*****GAME LOOP HERE*****
@@ -98,12 +106,37 @@ int main()
         mvprintw(0, 0,"Lives: %d", player.get_lives());
         mvprintw(1, 0,"Score: %d", player.get_score());
 
-        for(int i = 0; i < ENEMIESNUMBER; i++){
-            mvaddch(gorole[i].get_pos()[0], gorole[i].get_pos()[1], gorole[i].get_face());
+        aliveEnemies = 0;
+
+        if (playerBullet.is_active()){
+            playerBullet.go();
+            for(int i = 0; i < ENEMIESNUMBER; i++){
+                if (gorole[i].get_pos()[0] == playerBullet.get_pos()[0] && gorole[i].get_pos()[1] == playerBullet.get_pos()[1] && gorole[i].get_status()){
+                    playerBullet.deactivate();
+                    mvaddch(gorole[i].get_pos()[0], gorole[i].get_pos()[1], 'x');
+                    gorole[i].die();
+                    player.add_score(100);
+                    break;
+                }
+            }
+            if (playerBullet.get_pos()[0] <= 3 ){
+                playerBullet.deactivate();
+            }
+            if (playerBullet.is_active()){
+                mvaddch(playerBullet.get_pos()[0], playerBullet.get_pos()[1], playerBullet.get_face());
+            }
         }
-        refresh();
+
+        for(int i = 0; i < ENEMIESNUMBER; i++){
+            if (gorole[i].get_status()){
+                aliveEnemies++;
+                mvaddch(gorole[i].get_pos()[0], gorole[i].get_pos()[1], gorole[i].get_face());
+            }
+        }
+
 
         mvaddch(HEIGHT-1, player.get_pos(), player.get_face());
+        refresh();
 
         pressedkey = getch();
         sleep(100000);
@@ -115,6 +148,10 @@ int main()
             case KEY_RIGHT:
                 player.move_right();
                 break;
+            case ' ':
+                if (!playerBullet.is_active()){
+                    playerBullet.shoot(HEIGHT-2, player.get_pos(), true);
+                }
             default:
                 break;
             pressedkey = 0;
@@ -136,7 +173,7 @@ int main()
         }
 
         lowest = find_lowest(gorole);
-        if (gorole[lowest].get_pos()[0] >= HEIGHT-2 ){
+        if (gorole[lowest].get_pos()[0] >= HEIGHT-1 || aliveEnemies == 0){
             game = false;
         }
         clear();
@@ -146,6 +183,8 @@ int main()
 
     printw("Game ended, lol.");
     refresh();
+    sleep(100000);
+    getch();
     getch();
     endwin();
 
